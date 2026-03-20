@@ -566,11 +566,10 @@
     <div class="section">
       <div class="section-label">Book next appointment</div>
       <div class="note-card" style="font-style:normal; margin-bottom: 1rem;">
-        Ready for <span id="book-dog-name-inline">your pup</span>'s next groom? Tap below to get in touch or book online.
+        Ready for <span id="book-dog-name-inline">your pup</span>'s next groom? Message us on WhatsApp to book your next appointment!
       </div>
       <div style="display:flex; flex-direction:column; gap:10px;">
         <button class="book-btn" id="book-whatsapp" style="width:100%; padding:14px; font-size:14px; border-radius:12px;">💬 Message us on WhatsApp</button>
-        <button class="book-btn" id="book-online" style="width:100%; padding:14px; font-size:14px; border-radius:12px; background: var(--brown-mid);">📅 Book online</button>
       </div>
     </div>
   </div>
@@ -587,7 +586,7 @@
   // CONFIGURATION — Update these values for your salon
   // ============================================================
   const CONFIG = {
-    AIRTABLE_TOKEN: 'patnAuAn1GftMbGFK.d99ff780e3bee18d4b2355086e58b8577dc9ac010a338ff30f4bef9868157332',
+    AIRTABLE_TOKEN: 'pat9GyNaTjpJq8RFi.678ae1bcaeb5749a6929111ed353f1974a67e0eea77b6991f62ce2ec3a73e6da',
     AIRTABLE_BASE_ID: 'appWXMYg8LnN4mOIW',
     SALON_NAME: 'The Pets Workshop',
     WHATSAPP_NUMBER: '6598260581',       // Your WhatsApp number with country code, no +
@@ -740,22 +739,6 @@
         </div>
       `;
 
-      // Visit history (from linked field if available)
-      const history = f['All Visit Dates'];
-      if (history && history.length > 1) {
-        const histList = document.getElementById('history-list');
-        const visitDate = f['Visit Date'] || '';
-        histList.innerHTML = history.map((d, i) => `
-          <div class="history-item">
-            <div>
-              <div class="history-date">${d}</div>
-              <div class="history-services">${i === 0 ? (f['Services'] || '') : '—'}</div>
-            </div>
-            ${d === visitDate ? '<span class="history-current">This visit</span>' : ''}
-          </div>
-        `).join('');
-      }
-
       // Footer
       document.getElementById('footer-salon').textContent = CONFIG.SALON_NAME;
       document.getElementById('footer-dog').textContent = f['Dog Name'] || '—';
@@ -766,7 +749,32 @@
       // Share buttons
       const pageUrl = window.location.href;
       const dogName = f['Dog Name'] || 'your dog';
-      const ownerName = f['Owner Name'] || '';
+      const currentRecordId = recordId;
+
+      // Click tracking — increments Booking Clicks in Airtable
+      async function trackBookingClick() {
+        try {
+          const currentClicks = f['Booking Clicks'] || 0;
+          await fetch(`https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits/${currentRecordId}`, {
+            method: 'PATCH',
+            headers: {
+              Authorization: `Bearer ${CONFIG.AIRTABLE_TOKEN}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ fields: { 'Booking Clicks': currentClicks + 1 } }),
+          });
+          f['Booking Clicks'] = currentClicks + 1;
+        } catch (e) {
+          console.error('Click tracking failed:', e);
+        }
+      }
+
+      // WhatsApp booking message
+      function openWhatsAppBooking() {
+        trackBookingClick();
+        const msg = encodeURIComponent(`Hi! I'd like to book ${dogName}'s next grooming appointment.`);
+        window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+      }
 
       document.getElementById('copy-btn').addEventListener('click', () => {
         navigator.clipboard.writeText(pageUrl).then(() => {
@@ -785,16 +793,55 @@
         window.open(`https://wa.me/?text=${msg}`, '_blank');
       });
 
-      document.getElementById('book-btn-report').addEventListener('click', () => {
-        window.open(CONFIG.BOOKING_URL, '_blank');
-      });
-      document.getElementById('book-online').addEventListener('click', () => {
-        window.open(CONFIG.BOOKING_URL, '_blank');
-      });
-      document.getElementById('book-whatsapp').addEventListener('click', () => {
-        const msg = encodeURIComponent(`Hi! I'd like to book ${dogName}'s next grooming appointment.`);
-        window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`, '_blank');
-      });
+      document.getElementById('book-btn-report').addEventListener('click', openWhatsAppBooking);
+      document.getElementById('book-whatsapp').addEventListener('click', openWhatsAppBooking);
+
+      // Load visit history — query Airtable for all records matching this dog + owner
+      async function loadHistory() {
+        try {
+          const filterFormula = encodeURIComponent(
+            `AND({Dog Name}="${f['Dog Name']}",{Owner Name}="${f['Owner Name']}")`
+          );
+          const histRes = await fetch(
+            `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits?filterByFormula=${filterFormula}&sort[0][field]=Visit%20Date&sort[0][direction]=desc&fields[]=Visit%20Date&fields[]=Services&fields[]=Visit%20Number`,
+            { headers: { Authorization: `Bearer ${CONFIG.AIRTABLE_TOKEN}` } }
+          );
+          const histData = await histRes.json();
+          const histList = document.getElementById('history-list');
+
+          if (!histData.records || histData.records.length === 0) {
+            histList.innerHTML = '<p style="color: var(--text-muted); font-size:14px;">No visits on record.</p>';
+            return;
+          }
+
+          histList.innerHTML = histData.records.map(rec => {
+            const isCurrentVisit = rec.id === currentRecordId;
+            const visitDate = rec.fields['Visit Date'] || '—';
+            const services = rec.fields['Services'] || '—';
+            const visitNum = rec.fields['Visit Number'] ? `Visit #${rec.fields['Visit Number']}` : '';
+            const reportUrl = `${window.location.origin}${window.location.pathname}?id=${rec.id}`;
+            return `
+              <div class="history-item" style="${isCurrentVisit ? 'border-color: var(--brown-warm);' : ''}">
+                <div>
+                  <div class="history-date">${visitDate}</div>
+                  <div class="history-services">${services}</div>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+                  ${isCurrentVisit
+                    ? '<span class="history-current">This visit</span>'
+                    : `<a href="${reportUrl}" style="font-size:11px; font-weight:700; color:var(--brown-warm); text-decoration:none; letter-spacing:0.5px;">View →</a>`
+                  }
+                  ${visitNum ? `<span style="font-size:10px; color:var(--text-muted);">${visitNum}</span>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('');
+        } catch (e) {
+          console.error('History load failed:', e);
+        }
+      }
+
+      loadHistory();
 
       // Show main
       document.getElementById('loading').style.display = 'none';
