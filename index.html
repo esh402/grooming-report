@@ -25,433 +25,95 @@
     --red-light: #FDECEA;
     --red-text: #8B2A2A;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
 
-  body {
-    font-family: 'Lato', sans-serif;
-    background: var(--cream);
-    color: var(--text-dark);
-    min-height: 100vh;
-  }
-
-  /* Loading */
-  #loading {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    background: var(--cream);
-  }
-  .paw-spin {
-    font-size: 2.5rem;
-    animation: spin 1.4s ease-in-out infinite;
-  }
-  @keyframes spin {
-    0%, 100% { transform: rotate(-15deg) scale(1); }
-    50% { transform: rotate(15deg) scale(1.1); }
-  }
+  #loading { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: var(--cream); }
+  .paw-spin { font-size: 2.5rem; animation: spin 1.4s ease-in-out infinite; }
+  @keyframes spin { 0%, 100% { transform: rotate(-15deg) scale(1); } 50% { transform: rotate(15deg) scale(1.1); } }
   #loading p { color: var(--text-muted); font-size: 14px; letter-spacing: 1px; }
 
-  /* Error */
-  #error {
-    display: none;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem;
-    text-align: center;
-  }
+  #error { display: none; min-height: 100vh; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; padding: 2rem; text-align: center; }
   #error h2 { font-family: 'Playfair Display', serif; color: var(--brown-mid); }
   #error p { color: var(--text-muted); font-size: 14px; max-width: 300px; }
-
-  /* Main content */
   #main { display: none; }
 
-  /* Hero */
-  .hero {
-    background: var(--brown-dark);
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 2rem;
-  }
-  .hero-texture {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle at 20% 50%, rgba(160,98,42,0.3) 0%, transparent 50%),
-                      radial-gradient(circle at 80% 20%, rgba(107,63,30,0.4) 0%, transparent 40%);
-    pointer-events: none;
-  }
-  .salon-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.2rem 1.5rem 0;
-    position: relative;
-    z-index: 2;
-  }
-  .salon-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.5px;
-  }
-  .visit-chip {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.6);
-    font-size: 11px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-  }
-  .hero-body {
-    padding: 1.5rem 1.5rem 0;
-    display: flex;
-    align-items: flex-end;
-    gap: 1.2rem;
-    position: relative;
-    z-index: 2;
-  }
-  .dog-photo {
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
-    border: 2.5px solid rgba(255,255,255,0.25);
-    object-fit: cover;
-    flex-shrink: 0;
-    background: var(--brown-mid);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    overflow: hidden;
-  }
+  .hero { background: var(--brown-dark); position: relative; overflow: hidden; }
+  .hero-texture { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(160,98,42,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(107,63,30,0.4) 0%, transparent 40%); pointer-events: none; }
+  .salon-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem 0; position: relative; z-index: 2; }
+  .salon-logo { font-family: 'Playfair Display', serif; font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.5px; }
+  .visit-chip { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); font-size: 11px; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.5px; }
+
+  .hero-body { padding: 1.2rem 1.5rem 1.5rem; display: flex; align-items: center; gap: 1rem; position: relative; z-index: 2; flex-wrap: wrap; }
+  .dog-photo { width: 80px; height: 80px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.25); flex-shrink: 0; background: var(--brown-mid); display: flex; align-items: center; justify-content: center; font-size: 2rem; overflow: hidden; }
   .dog-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .hero-info { flex: 1; padding-bottom: 4px; }
-  .dog-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .dog-meta {
-    font-size: 12px;
-    color: rgba(255,255,255,0.55);
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-  }
-  .owner-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.7);
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
+  .hero-info { flex: 1; min-width: 120px; }
+  .dog-name { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; line-height: 1; margin-bottom: 4px; }
+  .dog-meta { font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.5px; margin-bottom: 8px; }
+  .owner-tag { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); font-size: 11px; padding: 3px 10px; border-radius: 20px; }
 
-  /* Tabs */
-  .tab-bar {
-    display: flex;
-    background: #fff;
-    border-bottom: 1px solid var(--cream-border);
-    position: sticky;
-    top: 0;
-    z-index: 20;
-  }
-  .tab {
-    flex: 1;
-    padding: 13px 4px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-align: center;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-    user-select: none;
-  }
-  .tab.active {
-    color: var(--brown-mid);
-    border-bottom-color: var(--brown-warm);
-  }
+  .hero-next-bubble { background: rgba(0,0,0,0.35); border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0; }
+  .hero-next-label { font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .hero-next-date { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; line-height: 1.2; }
+  .hero-book-btn { background: var(--brown-warm); color: #fff; border: none; border-radius: 10px; padding: 9px 13px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; flex-shrink: 0; }
 
-  /* Tab panels */
+  .tab-bar { display: flex; background: #fff; border-bottom: 1px solid var(--cream-border); position: sticky; top: 0; z-index: 20; }
+  .tab { flex: 1; padding: 12px 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); text-align: center; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; user-select: none; line-height: 1.3; }
+  .tab.active { color: var(--brown-mid); border-bottom-color: var(--brown-warm); }
+
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* Sections */
-  .section {
-    padding: 1.4rem 1.5rem;
-    max-width: 540px;
-    margin: 0 auto;
-  }
+  .section { padding: 1.4rem 1.5rem; max-width: 540px; margin: 0 auto; }
   .section + .section { padding-top: 0; }
-  .section-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--brown-light);
-    margin-bottom: 0.9rem;
-  }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--brown-light); margin-bottom: 0.9rem; }
 
-  /* Services */
-  .services-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px;
-  }
-  .service-pill {
-    background: #fff;
-    border: 1px solid var(--cream-border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-  }
-  .service-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: var(--cream-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
+  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .service-pill { background: #fff; border: 1px solid var(--cream-border); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 9px; }
+  .service-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
   .service-text { flex: 1; min-width: 0; }
   .service-name { font-size: 13px; font-weight: 700; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .service-tick { font-size: 11px; color: var(--green-text); margin-top: 1px; }
 
-  /* Health */
-  .health-card {
-    background: #fff;
-    border: 1px solid var(--cream-border);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .health-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 11px 16px;
-    border-bottom: 1px solid var(--cream-border);
-    font-size: 14px;
-  }
-  .health-row:last-child { border-bottom: none; }
-  .health-label { color: var(--text-mid); }
-  .badge {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
-  }
+  .data-card { background: #fff; border: 1px solid var(--cream-border); border-radius: 14px; overflow: hidden; }
+  .data-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--cream-border); font-size: 14px; }
+  .data-row:last-child { border-bottom: none; }
+  .data-label { color: var(--text-mid); }
+  .data-val { font-weight: 700; color: var(--text-dark); font-size: 13px; text-align: right; max-width: 55%; }
+
+  .badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.3px; }
   .badge-good { background: var(--green-light); color: var(--green-text); }
   .badge-note { background: var(--amber-light); color: var(--amber-text); }
   .badge-warn { background: var(--red-light); color: var(--red-text); }
   .badge-neutral { background: var(--cream-dark); color: var(--text-mid); }
 
-  /* Note */
-  .note-card {
-    background: #fff;
-    border: 1px solid var(--cream-border);
-    border-left: 3px solid var(--brown-warm);
-    border-radius: 12px;
-    padding: 1.1rem 1.2rem;
-    font-size: 14px;
-    line-height: 1.75;
-    color: var(--text-mid);
-    font-style: italic;
-  }
-  .note-author {
-    font-style: normal;
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 8px;
-    font-weight: 700;
-  }
+  .note-card { background: #fff; border: 1px solid var(--cream-border); border-left: 3px solid var(--brown-warm); border-radius: 0 12px 12px 0; padding: 1.1rem 1.2rem; font-size: 14px; line-height: 1.75; color: var(--text-mid); font-style: italic; box-shadow: 0 4px 18px rgba(160,98,42,0.08); margin: 0 2px; }
+  .note-author { font-style: normal; font-size: 12px; color: var(--text-muted); margin-top: 8px; font-weight: 700; }
 
-  /* Photos */
-  .photos-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .photo-frame {
-    aspect-ratio: 1;
-    border-radius: 14px;
-    background: var(--cream-dark);
-    border: 1px solid var(--cream-border);
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .photo-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .photo-frame .no-photo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    color: var(--text-muted);
-    font-size: 28px;
-  }
-  .photo-frame .no-photo span {
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .photo-label {
-    position: absolute;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
-    background: rgba(44,26,14,0.7);
-    color: rgba(255,255,255,0.9);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 4px 0;
-    border-radius: 6px;
-  }
+  .next-card { background: var(--brown-dark); border-radius: 16px; padding: 1.2rem 1.4rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .next-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .next-date { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; }
+  .book-btn { background: var(--brown-warm); color: #fff; border: none; border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; flex-shrink: 0; }
 
-  /* Divider */
-  .paw-divider {
-    text-align: center;
-    padding: 0.5rem 0;
-    color: var(--cream-border);
-    font-size: 14px;
-    letter-spacing: 10px;
-  }
+  .milestone-frame { width: 100%; height: 160px; border-radius: 14px; background: var(--cream-dark); border: 1.5px dashed var(--brown-light); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted); font-size: 13px; overflow: hidden; }
+  .milestone-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
 
-  /* Next visit */
-  .next-card {
-    background: var(--brown-dark);
-    border-radius: 16px;
-    padding: 1.2rem 1.4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-  }
-  .next-label {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 4px;
-  }
-  .next-date {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: #fff;
-  }
-  .book-btn {
-    background: var(--brown-warm);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    white-space: nowrap;
-    letter-spacing: 0.3px;
-    flex-shrink: 0;
-  }
+  .history-list { display: flex; flex-direction: column; gap: 10px; }
+  .history-item { background: #fff; border: 1px solid var(--cream-border); border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .history-date { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+  .history-services { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .history-current { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: var(--amber-light); color: var(--amber-text); padding: 3px 10px; border-radius: 20px; }
 
-  /* Share */
-  .share-row {
-    display: flex;
-    gap: 9px;
-  }
-  .share-btn {
-    flex: 1;
-    background: #fff;
-    border: 1px solid var(--cream-border);
-    border-radius: 12px;
-    padding: 12px 8px;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-mid);
-    cursor: pointer;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: background 0.15s;
-  }
+  .share-row { display: flex; gap: 9px; }
+  .share-btn { flex: 1; background: #fff; border: 1px solid var(--cream-border); border-radius: 12px; padding: 12px 8px; font-size: 13px; font-weight: 700; color: var(--text-mid); cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.15s; }
   .share-btn:active { background: var(--cream-dark); }
   .share-btn.copied { color: var(--green-text); border-color: var(--green-light); }
 
-  /* History */
-  .history-list { display: flex; flex-direction: column; gap: 10px; }
-  .history-item {
-    background: #fff;
-    border: 1px solid var(--cream-border);
-    border-radius: 14px;
-    padding: 14px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .history-date { font-size: 13px; font-weight: 700; color: var(--text-dark); }
-  .history-services { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .history-current {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: var(--amber-light);
-    color: var(--amber-text);
-    padding: 3px 10px;
-    border-radius: 20px;
-  }
-
-  /* Footer */
-  .footer {
-    text-align: center;
-    padding: 1.5rem 1.5rem 2.5rem;
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.8;
-    border-top: 1px solid var(--cream-border);
-    margin-top: 1rem;
-  }
+  .footer { text-align: center; padding: 1.5rem 1.5rem 2.5rem; font-size: 12px; color: var(--text-muted); line-height: 1.8; border-top: 1px solid var(--cream-border); margin-top: 1rem; }
   .footer strong { color: var(--text-mid); }
 
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up {
-    animation: fadeUp 0.5s ease forwards;
-    opacity: 0;
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-up { animation: fadeUp 0.5s ease forwards; opacity: 0; }
   .fade-up:nth-child(1) { animation-delay: 0.05s; }
   .fade-up:nth-child(2) { animation-delay: 0.12s; }
   .fade-up:nth-child(3) { animation-delay: 0.19s; }
@@ -476,7 +138,7 @@
   <div class="hero">
     <div class="hero-texture"></div>
     <div class="salon-header">
-      <div class="salon-logo" id="salon-name">The Pampered Paw</div>
+      <div class="salon-logo" id="salon-name">The Pets Workshop</div>
       <div class="visit-chip" id="visit-chip">Visit #1</div>
     </div>
     <div class="hero-body">
@@ -486,53 +148,50 @@
         <div class="dog-meta" id="dog-meta">—</div>
         <div class="owner-tag">👤 <span id="owner-name">—</span></div>
       </div>
+      <div class="hero-next-bubble">
+        <div>
+          <div class="hero-next-label">Next Recommended Visit</div>
+          <div class="hero-next-date" id="hero-next-date">—</div>
+        </div>
+        <button class="hero-book-btn" id="hero-book-btn">Book now →</button>
+      </div>
     </div>
   </div>
 
   <div class="tab-bar">
-    <div class="tab active" data-panel="report">Report</div>
-    <div class="tab" data-panel="photos">Photos</div>
-    <div class="tab" data-panel="history">History</div>
-    <div class="tab" data-panel="book">Book</div>
+    <div class="tab active" data-panel="pawfile">Pawfile</div>
+    <div class="tab" data-panel="checklist">Pawfect Checklist</div>
+    <div class="tab" data-panel="milestones">Pawport Milestones</div>
   </div>
 
-  <!-- REPORT TAB -->
-  <div class="panel active" id="panel-report">
+  <!-- PAWFILE TAB -->
+  <div class="panel active" id="panel-pawfile">
     <div class="section">
-      <div class="section-label">Services today</div>
+      <div class="section-label">Services Today</div>
       <div class="services-grid" id="services-grid"></div>
     </div>
-
     <div class="section">
-      <div class="section-label">Health check</div>
-      <div class="health-card" id="health-card"></div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Groomer's note</div>
-      <div class="note-card">
-        <div id="groomer-note">—</div>
-        <div class="note-author" id="groomer-name">—</div>
+      <div class="section-label">Preferences</div>
+      <div class="data-card">
+        <div class="data-row"><span class="data-label">Fur length</span><span class="data-val" id="pref-fur-length">—</span></div>
+        <div class="data-row"><span class="data-label">Style</span><span class="data-val" id="pref-style">—</span></div>
       </div>
     </div>
-
     <div class="section">
-      <div class="paw-divider">🐾 🐾 🐾</div>
-    </div>
-
-    <div class="section">
-      <div class="section-label">Next recommended visit</div>
-      <div class="next-card">
-        <div>
-          <div class="next-label">Recommended</div>
-          <div class="next-date" id="next-visit">—</div>
-        </div>
-        <button class="book-btn" id="book-btn-report">Book now →</button>
+      <div class="section-label">Behaviour</div>
+      <div class="data-card">
+        <div class="data-row"><span class="data-label">Tendency to bite</span><span id="behaviour-bite">—</span></div>
+        <div class="data-row"><span class="data-label">Things to note</span><span class="data-val" id="behaviour-notes">—</span></div>
       </div>
     </div>
-
     <div class="section">
-      <div class="section-label">Share this report</div>
+      <div class="section-label">Others</div>
+      <div class="data-card">
+        <div class="data-row"><span class="data-label">Fully vaccinated</span><span id="others-vaccinated">—</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Share This Report</div>
       <div class="share-row">
         <button class="share-btn" id="copy-btn">🔗 Copy link</button>
         <button class="share-btn" id="whatsapp-btn">💬 WhatsApp</button>
@@ -540,62 +199,78 @@
     </div>
   </div>
 
-  <!-- PHOTOS TAB -->
-  <div class="panel" id="panel-photos">
+  <!-- PAWFECT CHECKLIST TAB -->
+  <div class="panel" id="panel-checklist">
     <div class="section">
-      <div class="section-label">Today's photos</div>
-      <div class="photos-grid" id="photos-grid">
-        <div class="photo-frame"><div class="no-photo">🐾<span>Before</span></div></div>
-        <div class="photo-frame"><div class="no-photo">✨<span>After</span></div></div>
+      <div class="section-label">Pre-Grooming</div>
+      <div class="data-card">
+        <div class="data-row"><span class="data-label">Services today</span><span class="data-val" id="pre-services">—</span></div>
+        <div class="data-row"><span class="data-label">Same style requested?</span><span id="pre-same-style">—</span></div>
+        <div class="data-row"><span class="data-label">Notes since last visit</span><span class="data-val" id="pre-notes">—</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">During Grooming</div>
+      <div class="data-card">
+        <div class="data-row"><span class="data-label">Face symmetry checked</span><span id="during-face">—</span></div>
+        <div class="data-row"><span class="data-label">Paws tidy</span><span id="during-paws">—</span></div>
+        <div class="data-row"><span class="data-label">Fur length checked</span><span id="during-fur">—</span></div>
+        <div class="data-row"><span class="data-label">Ears checked</span><span id="during-ears">—</span></div>
+        <div class="data-row"><span class="data-label">Nick or irritation observed</span><span id="during-nick">—</span></div>
+        <div class="data-row"><span class="data-label">Abnormal findings</span><span id="during-abnormal">—</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Post-Grooming</div>
+      <div class="note-card">
+        <div id="groomer-note">—</div>
+        <div class="note-author" id="groomer-name">—</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="next-card">
+        <div>
+          <div class="next-label">Next Recommended Visit</div>
+          <div class="next-date" id="next-visit">—</div>
+        </div>
+        <button class="book-btn" id="book-btn-checklist">Book now →</button>
       </div>
     </div>
   </div>
 
-  <!-- HISTORY TAB -->
-  <div class="panel" id="panel-history">
+  <!-- PAWPORT MILESTONES TAB -->
+  <div class="panel" id="panel-milestones">
     <div class="section">
-      <div class="section-label">Visit history</div>
+      <div class="section-label">Milestones</div>
+      <div class="milestone-frame" id="milestone-frame">
+        <div style="font-size:28px;">🖼️</div>
+        <div>Milestone photo</div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-label">History</div>
       <div class="history-list" id="history-list">
-        <p style="color: var(--text-muted); font-size:14px;">No previous visits on record.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- BOOK TAB -->
-  <div class="panel" id="panel-book">
-    <div class="section">
-      <div class="section-label">Book next appointment</div>
-      <div class="note-card" style="font-style:normal; margin-bottom: 1rem;">
-        Ready for <span id="book-dog-name-inline">your pup</span>'s next groom? Message us on WhatsApp to book your next appointment!
-      </div>
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <button class="book-btn" id="book-whatsapp" style="width:100%; padding:14px; font-size:14px; border-radius:12px;">💬 Message us on WhatsApp</button>
+        <p style="color:var(--text-muted);font-size:14px;">Loading visit history...</p>
       </div>
     </div>
   </div>
 
   <div class="footer">
-    <strong id="footer-salon">The Pampered Paw</strong><br>
+    <strong id="footer-salon">The Pets Workshop</strong><br>
     Report for <span id="footer-dog">—</span> · Owner: <span id="footer-owner">—</span><br>
-    <span id="footer-date" style="color: var(--cream-border);"></span>
+    <span id="footer-date" style="color:var(--cream-border);"></span>
   </div>
 </div>
 
 <script>
-  // ============================================================
-  // CONFIGURATION — Update these values for your salon
-  // ============================================================
   const CONFIG = {
     AIRTABLE_TOKEN: 'pat9GyNaTjpJq8RFi.678ae1bcaeb5749a6929111ed353f1974a67e0eea77b6991f62ce2ec3a73e6da',
     AIRTABLE_BASE_ID: 'appWXMYg8LnN4mOIW',
     SALON_NAME: 'The Pets Workshop',
-    WHATSAPP_NUMBER: '6598260581',       // Your WhatsApp number with country code, no +
+    WHATSAPP_NUMBER: '6598260581',
     BOOKING_URL: '#',
   };
 
-  // ============================================================
-  // Service icons mapping
-  // ============================================================
   const SERVICE_ICONS = {
     'bath': '🛁', 'full bath': '🛁', 'shampoo': '🛁',
     'trim': '✂️', 'haircut': '✂️', 'groom': '✂️', 'breed trim': '✂️',
@@ -616,24 +291,18 @@
     return '✨';
   }
 
-  // ============================================================
-  // Health badge helper
-  // ============================================================
   function healthBadge(value) {
-    if (!value) return '<span class="badge badge-neutral">—</span>';
+    if (!value || value === '—') return '<span class="badge badge-neutral">—</span>';
     const v = value.toLowerCase();
-    if (['healthy', 'good', 'clean', 'normal', 'excellent'].some(w => v.includes(w)))
+    if (['healthy', 'good', 'clean', 'normal', 'excellent', 'trimmed', 'yes', 'no', 'none', 'checked', 'tidy'].some(w => v.includes(w)))
       return `<span class="badge badge-good">${value}</span>`;
-    if (['slight', 'mild', 'monitor', 'note'].some(w => v.includes(w)))
+    if (['slight', 'mild', 'monitor'].some(w => v.includes(w)))
       return `<span class="badge badge-note">${value}</span>`;
-    if (['concern', 'vet', 'issue', 'problem', 'bad'].some(w => v.includes(w)))
+    if (['concern', 'vet', 'issue', 'problem', 'bad', 'found'].some(w => v.includes(w)))
       return `<span class="badge badge-warn">${value}</span>`;
     return `<span class="badge badge-neutral">${value}</span>`;
   }
 
-  // ============================================================
-  // Tab switching
-  // ============================================================
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -643,207 +312,156 @@
     });
   });
 
-  // ============================================================
-  // Load report
-  // ============================================================
   async function loadReport() {
     const params = new URLSearchParams(window.location.search);
     const recordId = params.get('id');
-
-    if (!recordId) {
-      showError();
-      return;
-    }
+    if (!recordId) { showError(); return; }
 
     try {
-      const url = `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits/${recordId}`;
-      const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${CONFIG.AIRTABLE_TOKEN}` }
-      });
-
+      const res = await fetch(
+        `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits/${recordId}`,
+        { headers: { Authorization: `Bearer ${CONFIG.AIRTABLE_TOKEN}` } }
+      );
       if (!res.ok) { showError(); return; }
 
       const data = await res.json();
       const f = data.fields;
 
-      // Populate hero
+      // Hero
       document.getElementById('salon-name').textContent = CONFIG.SALON_NAME;
       document.getElementById('dog-name').textContent = f['Dog Name'] || 'Unknown';
-      document.getElementById('dog-meta').textContent =
-        [f['Breed'], f['Age'], f['Sex']].filter(Boolean).join(' · ');
+      document.getElementById('dog-meta').textContent = [f['Breed'], f['Age'], f['Sex']].filter(Boolean).join(' · ');
       document.getElementById('owner-name').textContent = f['Owner Name'] || '—';
-      document.getElementById('visit-chip').textContent =
-        f['Visit Number'] ? `Visit #${f['Visit Number']}` : 'New visit';
+      document.getElementById('visit-chip').textContent = f['Visit Number'] ? `Visit #${f['Visit Number']}` : 'New visit';
+      document.getElementById('hero-next-date').textContent = f['Next Visit Recommendation'] || 'Ask your groomer';
 
-      // Dog photo
       if (f['Dog Photo'] && f['Dog Photo'][0]) {
-        const photoEl = document.getElementById('dog-photo');
-        photoEl.innerHTML = `<img src="${f['Dog Photo'][0].url}" alt="${f['Dog Name']}">`;
+        document.getElementById('dog-photo').innerHTML = `<img src="${f['Dog Photo'][0].url}" alt="${f['Dog Name']}">`;
       }
 
       // Services
-      const servicesRaw = f['Services'] || '';
-      const services = servicesRaw.split(',').map(s => s.trim()).filter(Boolean);
-      const grid = document.getElementById('services-grid');
-      grid.innerHTML = services.map((s, i) => `
+      const services = (f['Services'] || '').split(',').map(s => s.trim()).filter(Boolean);
+      document.getElementById('services-grid').innerHTML = services.map(s => `
         <div class="service-pill fade-up">
           <div class="service-icon">${getServiceIcon(s)}</div>
           <div class="service-text">
             <div class="service-name">${s}</div>
             <div class="service-tick">✓ Done</div>
           </div>
-        </div>
-      `).join('');
+        </div>`).join('');
 
-      // Health check
-      const healthFields = [
-        ['Coat Condition', f['Coat Condition']],
-        ['Skin', f['Skin']],
-        ['Ears', f['Ears']],
-        ['Nails', f['Nails']],
-        ['Temperament', f['Temperament']],
-        ['Weight', f['Weight']],
-      ].filter(([, v]) => v);
+      // Pawfile
+      document.getElementById('pref-fur-length').textContent = f['Fur Length'] || '—';
+      document.getElementById('pref-style').textContent = f['Style'] || '—';
+      document.getElementById('behaviour-bite').innerHTML = healthBadge(f['Tendency to Bite'] || '—');
+      document.getElementById('behaviour-notes').textContent = f['Behaviour Notes'] || '—';
+      document.getElementById('others-vaccinated').innerHTML = healthBadge(f['Fully Vaccinated'] || '—');
 
-      const healthCard = document.getElementById('health-card');
-      healthCard.innerHTML = healthFields.map(([label, val]) => `
-        <div class="health-row">
-          <span class="health-label">${label}</span>
-          ${healthBadge(val)}
-        </div>
-      `).join('');
+      // Checklist — Pre
+      document.getElementById('pre-services').textContent = f['Services'] || '—';
+      document.getElementById('pre-same-style').innerHTML = healthBadge(f['Same Style'] || '—');
+      document.getElementById('pre-notes').textContent = f['Notes Since Last Visit'] || 'None';
 
-      // Groomer note
-      document.getElementById('groomer-note').textContent =
-        f['Groomer Note'] || 'No notes added for this visit.';
-      document.getElementById('groomer-name').textContent =
-        f['Groomer Name'] ? `— ${f['Groomer Name']}, Groomer` : '';
+      // Checklist — During
+      document.getElementById('during-face').innerHTML = healthBadge(f['Face Symmetry'] || '—');
+      document.getElementById('during-paws').innerHTML = healthBadge(f['Paws Tidy'] || '—');
+      document.getElementById('during-fur').innerHTML = healthBadge(f['Fur Length Checked'] || '—');
+      document.getElementById('during-ears').innerHTML = healthBadge(f['Ears'] || '—');
+      document.getElementById('during-nick').innerHTML = healthBadge(f['Nick or Irritation'] || '—');
+      document.getElementById('during-abnormal').innerHTML = healthBadge(f['Abnormal Findings'] || '—');
 
-      // Next visit
+      // Checklist — Post
+      document.getElementById('groomer-note').textContent = f['Groomer Note'] || 'No notes added for this visit.';
+      document.getElementById('groomer-name').textContent = f['Groomer Name'] ? `— ${f['Groomer Name']}, Groomer` : '';
       document.getElementById('next-visit').textContent = f['Next Visit Recommendation'] || 'Ask your groomer';
 
-      // Photos
-      const photosGrid = document.getElementById('photos-grid');
-      const before = f['Photo Before'];
-      const after = f['Photo After'];
-      photosGrid.innerHTML = `
-        <div class="photo-frame">
-          ${before && before[0]
-            ? `<img src="${before[0].url}" alt="Before"><div class="photo-label">Before</div>`
-            : `<div class="no-photo">🐾<span>Before</span></div>`}
-        </div>
-        <div class="photo-frame">
-          ${after && after[0]
-            ? `<img src="${after[0].url}" alt="After"><div class="photo-label">After</div>`
-            : `<div class="no-photo">✨<span>After</span></div>`}
-        </div>
-      `;
+      // Milestones photo
+      if (f['Milestone Photo'] && f['Milestone Photo'][0]) {
+        const mf = document.getElementById('milestone-frame');
+        mf.innerHTML = `<img src="${f['Milestone Photo'][0].url}" alt="Milestone">`;
+      }
 
       // Footer
       document.getElementById('footer-salon').textContent = CONFIG.SALON_NAME;
       document.getElementById('footer-dog').textContent = f['Dog Name'] || '—';
       document.getElementById('footer-owner').textContent = f['Owner Name'] || '—';
       document.getElementById('footer-date').textContent = f['Visit Date'] || '';
-      document.getElementById('book-dog-name-inline').textContent = f['Dog Name'] || 'your pup';
 
-      // Share buttons
-      const pageUrl = window.location.href;
-      const dogName = f['Dog Name'] || 'your dog';
-      const currentRecordId = recordId;
-
-      // Click tracking — increments Booking Clicks in Airtable
+      // Click tracking
       async function trackBookingClick() {
         try {
-          const currentClicks = f['Booking Clicks'] || 0;
-          await fetch(`https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits/${currentRecordId}`, {
+          const clicks = f['Booking Clicks'] || 0;
+          await fetch(`https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits/${recordId}`, {
             method: 'PATCH',
-            headers: {
-              Authorization: `Bearer ${CONFIG.AIRTABLE_TOKEN}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ fields: { 'Booking Clicks': currentClicks + 1 } }),
+            headers: { Authorization: `Bearer ${CONFIG.AIRTABLE_TOKEN}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fields: { 'Booking Clicks': clicks + 1 } }),
           });
-          f['Booking Clicks'] = currentClicks + 1;
-        } catch (e) {
-          console.error('Click tracking failed:', e);
-        }
+          f['Booking Clicks'] = clicks + 1;
+        } catch (e) { console.error('Click tracking failed:', e); }
       }
 
-      // WhatsApp booking message
       function openWhatsAppBooking() {
         trackBookingClick();
-        const msg = encodeURIComponent(`Hi! I'd like to book ${dogName}'s next grooming appointment.`);
+        const msg = encodeURIComponent(`Hi! I'd like to book ${f['Dog Name'] || 'my dog'}'s next grooming appointment.`);
         window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`, '_blank');
       }
 
+      document.getElementById('hero-book-btn').addEventListener('click', openWhatsAppBooking);
+      document.getElementById('book-btn-checklist').addEventListener('click', openWhatsAppBooking);
+
+      const pageUrl = window.location.href;
       document.getElementById('copy-btn').addEventListener('click', () => {
         navigator.clipboard.writeText(pageUrl).then(() => {
           const btn = document.getElementById('copy-btn');
           btn.textContent = '✓ Copied!';
           btn.classList.add('copied');
-          setTimeout(() => {
-            btn.textContent = '🔗 Copy link';
-            btn.classList.remove('copied');
-          }, 2000);
+          setTimeout(() => { btn.textContent = '🔗 Copy link'; btn.classList.remove('copied'); }, 2000);
         });
       });
-
       document.getElementById('whatsapp-btn').addEventListener('click', () => {
-        const msg = encodeURIComponent(`Hi! Here's ${dogName}'s grooming report from ${CONFIG.SALON_NAME}: ${pageUrl}`);
+        const msg = encodeURIComponent(`Hi! Here's ${f['Dog Name'] || 'my dog'}'s grooming report from ${CONFIG.SALON_NAME}: ${pageUrl}`);
         window.open(`https://wa.me/?text=${msg}`, '_blank');
       });
 
-      document.getElementById('book-btn-report').addEventListener('click', openWhatsAppBooking);
-      document.getElementById('book-whatsapp').addEventListener('click', openWhatsAppBooking);
-
-      // Load visit history — query Airtable for all records matching this dog + owner
+      // History
       async function loadHistory() {
         try {
-          const filterFormula = encodeURIComponent(
-            `AND({Dog Name}="${f['Dog Name']}",{Owner Name}="${f['Owner Name']}")`
-          );
+          const filter = encodeURIComponent(`AND({Dog Name}="${f['Dog Name']}",{Owner Name}="${f['Owner Name']}")`);
           const histRes = await fetch(
-            `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits?filterByFormula=${filterFormula}&sort[0][field]=Visit%20Date&sort[0][direction]=desc&fields[]=Visit%20Date&fields[]=Services&fields[]=Visit%20Number`,
+            `https://api.airtable.com/v0/${CONFIG.AIRTABLE_BASE_ID}/Visits?filterByFormula=${filter}&sort[0][field]=Visit%20Date&sort[0][direction]=desc&fields[]=Visit%20Date&fields[]=Services&fields[]=Visit%20Number`,
             { headers: { Authorization: `Bearer ${CONFIG.AIRTABLE_TOKEN}` } }
           );
           const histData = await histRes.json();
           const histList = document.getElementById('history-list');
-
           if (!histData.records || histData.records.length === 0) {
-            histList.innerHTML = '<p style="color: var(--text-muted); font-size:14px;">No visits on record.</p>';
+            histList.innerHTML = '<p style="color:var(--text-muted);font-size:14px;">No visits on record.</p>';
             return;
           }
-
           histList.innerHTML = histData.records.map(rec => {
-            const isCurrentVisit = rec.id === currentRecordId;
+            const isCurrent = rec.id === recordId;
             const visitDate = rec.fields['Visit Date'] || '—';
-            const services = rec.fields['Services'] || '—';
+            const svc = rec.fields['Services'] || '—';
             const visitNum = rec.fields['Visit Number'] ? `Visit #${rec.fields['Visit Number']}` : '';
             const reportUrl = `${window.location.origin}${window.location.pathname}?id=${rec.id}`;
             return `
-              <div class="history-item" style="${isCurrentVisit ? 'border-color: var(--brown-warm);' : ''}">
+              <div class="history-item" style="${isCurrent ? 'border-color:var(--brown-warm);' : ''}">
                 <div>
                   <div class="history-date">${visitDate}</div>
-                  <div class="history-services">${services}</div>
+                  <div class="history-services">${svc}</div>
                 </div>
-                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
-                  ${isCurrentVisit
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+                  ${isCurrent
                     ? '<span class="history-current">This visit</span>'
-                    : `<a href="${reportUrl}" style="font-size:11px; font-weight:700; color:var(--brown-warm); text-decoration:none; letter-spacing:0.5px;">View →</a>`
-                  }
-                  ${visitNum ? `<span style="font-size:10px; color:var(--text-muted);">${visitNum}</span>` : ''}
+                    : `<a href="${reportUrl}" style="font-size:11px;font-weight:700;color:var(--brown-warm);text-decoration:none;">View →</a>`}
+                  ${visitNum ? `<span style="font-size:10px;color:var(--text-muted);">${visitNum}</span>` : ''}
                 </div>
-              </div>
-            `;
+              </div>`;
           }).join('');
-        } catch (e) {
-          console.error('History load failed:', e);
-        }
+        } catch (e) { console.error('History load failed:', e); }
       }
 
       loadHistory();
 
-      // Show main
       document.getElementById('loading').style.display = 'none';
       document.getElementById('main').style.display = 'block';
 
