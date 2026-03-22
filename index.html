@@ -373,15 +373,15 @@
 
       // Checklist — Pre
       document.getElementById('pre-services').textContent = f['Services'] || '—';
-      document.getElementById('pre-same-style').innerHTML = healthBadge(f['Same Style'] || '—');
+      document.getElementById('pre-same-style').innerHTML = healthBadge(f['Same Stye Requested'] || '—');
       document.getElementById('pre-notes').textContent = f['Notes Since Last Visit'] || 'None';
 
       // Checklist — During
       document.getElementById('during-face').innerHTML = healthBadge(f['Face Symmetry'] || '—');
       document.getElementById('during-paws').innerHTML = healthBadge(f['Paws Tidy'] || '—');
       document.getElementById('during-fur').innerHTML = healthBadge(f['Fur Length Checked'] || '—');
-      document.getElementById('during-ears').innerHTML = healthBadge(f['Ears'] || '—');
-      document.getElementById('during-nick').innerHTML = healthBadge(f['Nick or Irritation'] || '—');
+      document.getElementById('during-ears').innerHTML = healthBadge(f['Ears Checked'] || '—');
+      document.getElementById('during-nick').innerHTML = healthBadge(f['Nick or Irritation'] || f['Nick or Irri'] || '—');
       document.getElementById('during-abnormal').innerHTML = healthBadge(f['Abnormal Findings'] || '—');
 
       // Checklist — Post
