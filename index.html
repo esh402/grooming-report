@@ -237,7 +237,7 @@
         <div class="photo-frame"><div class="no-photo">✨<span>After</span></div></div>
       </div>
     </div>
-    <div class="section">
+    <div class="section" id="misc-section" style="display:none;">
       <div class="section-label">Miscellaneous</div>
       <div class="misc-grid" id="misc-grid">
         <div class="misc-frame"><div class="no-photo" style="font-size:14px; color: var(--cream-border);">📷<span style="font-size:10px; color: var(--cream-border);">Photo 1</span></div></div>
@@ -245,7 +245,7 @@
         <div class="misc-frame"><div class="no-photo" style="font-size:14px; color: var(--cream-border);">📷<span style="font-size:10px; color: var(--cream-border);">Photo 3</span></div></div>
       </div>
     </div>
-    <div class="section">
+    <div class="section" id="misc-notes-section" style="display:none;">
       <div class="note-card" style="font-style:normal; color: var(--text-muted);" id="misc-notes">Any additional observations or notes from the groomer...</div>
     </div>
     <div class="section">
@@ -405,16 +405,21 @@
 
       // Misc photos and notes
       const miscPhotos = [f['Misc Photo 1'], f['Misc Photo 2'], f['Misc Photo 3']];
-      const miscGrid = document.getElementById('misc-grid');
-      miscGrid.innerHTML = miscPhotos.map((photo, i) => `
-        <div class="misc-frame">
-          ${photo && photo[0]
-            ? `<img src="${photo[0].url}" alt="Misc ${i+1}" style="width:100%;height:100%;object-fit:cover;">`
-            : `<div class="no-photo" style="font-size:20px;">📷<span>Photo ${i+1}</span></div>`}
-        </div>`).join('');
-
+      const hasMiscPhotos = miscPhotos.some(p => p && p[0]);
       const miscNotes = f['Miscellaneous Notes'];
+
+      if (hasMiscPhotos) {
+        document.getElementById('misc-section').style.display = 'block';
+        document.getElementById('misc-grid').innerHTML = miscPhotos.map((photo, i) => `
+          <div class="misc-frame">
+            ${photo && photo[0]
+              ? `<img src="${photo[0].url}" alt="Misc ${i+1}" style="width:100%;height:100%;object-fit:cover;">`
+              : `<div class="no-photo" style="font-size:14px;color:var(--cream-border);">📷<span style="font-size:10px;color:var(--cream-border);">Photo ${i+1}</span></div>`}
+          </div>`).join('');
+      }
+
       if (miscNotes) {
+        document.getElementById('misc-notes-section').style.display = 'block';
         document.getElementById('misc-notes').textContent = miscNotes;
         document.getElementById('misc-notes').style.color = 'var(--text-mid)';
         document.getElementById('misc-notes').style.fontStyle = 'normal';
