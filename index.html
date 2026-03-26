@@ -95,6 +95,9 @@
   .next-date { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; }
   .book-btn { background: var(--brown-warm); color: #fff; border: none; border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; flex-shrink: 0; }
 
+  .misc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
+  .misc-frame { aspect-ratio: 1; border-radius: 12px; background: var(--cream-dark); border: 1.5px dashed var(--brown-light); overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
+
   .photos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .photo-frame { aspect-ratio: 1; border-radius: 14px; background: var(--cream-dark); border: 1px solid var(--cream-border); overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
   .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
@@ -102,7 +105,7 @@
   .photo-frame .no-photo span { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
   .photo-label { position: absolute; bottom: 8px; left: 8px; right: 8px; background: rgba(44,26,14,0.7); color: rgba(255,255,255,0.9); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; padding: 4px 0; border-radius: 6px; }
 
-  .milestone-frame { width: 100%; height: 320px; aspect-ratio: unset; border-radius: 14px; background: var(--cream-dark); border: 1.5px dashed var(--brown-light); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted); font-size: 13px; overflow: hidden; }
+  .milestone-frame { width: 100%; height: 420px; aspect-ratio: unset; border-radius: 14px; background: var(--cream-dark); border: 1.5px dashed var(--brown-light); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted); font-size: 13px; overflow: hidden; }
   .milestone-frame img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; background: var(--cream-dark); }
 
   .history-list { display: flex; flex-direction: column; gap: 10px; }
@@ -240,6 +243,17 @@
         <div class="photo-frame"><div class="no-photo">🐾<span>Before</span></div></div>
         <div class="photo-frame"><div class="no-photo">✨<span>After</span></div></div>
       </div>
+    </div>
+    <div class="section">
+      <div class="section-label">Miscellaneous</div>
+      <div class="misc-grid" id="misc-grid">
+        <div class="misc-frame"><div class="no-photo" style="font-size:20px;">📷<span>Photo 1</span></div></div>
+        <div class="misc-frame"><div class="no-photo" style="font-size:20px;">📷<span>Photo 2</span></div></div>
+        <div class="misc-frame"><div class="no-photo" style="font-size:20px;">📷<span>Photo 3</span></div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="note-card" style="font-style:normal; color: var(--text-muted);" id="misc-notes">Any additional observations or notes from the groomer...</div>
     </div>
     <div class="section">
       <div class="next-card">
@@ -388,6 +402,23 @@
       document.getElementById('groomer-note').textContent = f['Groomer Note'] || 'No notes added for this visit.';
       document.getElementById('groomer-name').textContent = f['Groomer Name'] ? `— ${f['Groomer Name']}, Groomer` : '';
       document.getElementById('next-visit').textContent = f['Next Visit Recommendation'] || 'Ask your groomer';
+
+      // Misc photos and notes
+      const miscPhotos = [f['Misc Photo 1'], f['Misc Photo 2'], f['Misc Photo 3']];
+      const miscGrid = document.getElementById('misc-grid');
+      miscGrid.innerHTML = miscPhotos.map((photo, i) => `
+        <div class="misc-frame">
+          ${photo && photo[0]
+            ? `<img src="${photo[0].url}" alt="Misc ${i+1}" style="width:100%;height:100%;object-fit:cover;">`
+            : `<div class="no-photo" style="font-size:20px;">📷<span>Photo ${i+1}</span></div>`}
+        </div>`).join('');
+
+      const miscNotes = f['Miscellaneous Notes'];
+      if (miscNotes) {
+        document.getElementById('misc-notes').textContent = miscNotes;
+        document.getElementById('misc-notes').style.color = 'var(--text-mid)';
+        document.getElementById('misc-notes').style.fontStyle = 'normal';
+      }
 
       // Before/After photos
       const before = f['Photo Before'];
