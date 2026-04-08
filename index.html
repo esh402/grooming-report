@@ -331,6 +331,19 @@
     return `<span class="badge badge-neutral">${value}</span>`;
   }
 
+  // For fields where Yes = bad (Nick/Irritation, Abnormal Findings)
+  function warnIfYes(value) {
+    if (!value || value === '—') return '<span class="badge badge-neutral">—</span>';
+    const v = value.toLowerCase();
+    if (['no', 'none', 'clear', 'false'].some(w => v.includes(w)))
+      return `<span class="badge badge-good">${value}</span>`;
+    if (['yes', 'observed', 'found', 'concern', 'issue'].some(w => v.includes(w)))
+      return `<span class="badge badge-warn">${value}</span>`;
+    if (['mild', 'slight', 'monitor'].some(w => v.includes(w)))
+      return `<span class="badge badge-note">${value}</span>`;
+    return `<span class="badge badge-neutral">${value}</span>`;
+  }
+
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -395,8 +408,8 @@
       document.getElementById('during-paws').innerHTML = healthBadge(f['Paws Tidy'] || '—');
       document.getElementById('during-fur').innerHTML = healthBadge(f['Fur Length Checked'] || '—');
       document.getElementById('during-ears').innerHTML = healthBadge(f['Ears Checked'] || '—');
-      document.getElementById('during-nick').innerHTML = healthBadge(f['Nick or Irritation'] || f['Nick or Irri'] || '—');
-      document.getElementById('during-abnormal').innerHTML = healthBadge(f['Abnormal Findings'] || '—');
+      document.getElementById('during-nick').innerHTML = warnIfYes(f['Nick or Irritation'] || f['Nick or Irri'] || '—');
+      document.getElementById('during-abnormal').innerHTML = warnIfYes(f['Abnormal Findings'] || '—');
 
       // Checklist — Post
       document.getElementById('groomer-note').textContent = f['Groomer Note'] || 'No notes added for this visit.';
